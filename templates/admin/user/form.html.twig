@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <section class="panel panel-narrow">
+        <p class="eyebrow">Admin</p>
+        <h1>{{ title }}</h1>
+        <p class="muted">Update login details and access level for this account.</p>
+
+        {{ form_start(form) }}
+            <div class="form-grid">
+                {{ form_row(form.email) }}
+                {{ form_row(form.plainPassword) }}
+                {{ form_row(form.isAdmin) }}
+            </div>
+
+            <div class="toolbar">
+                <button class="button" type="submit">Save</button>
+                <a class="button button-secondary" href="{{ path('app_admin_user_index') }}">Back</a>
+            </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

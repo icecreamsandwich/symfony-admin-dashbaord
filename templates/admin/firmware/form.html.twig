@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <section class="panel panel-narrow">
+        <p class="eyebrow">Admin</p>
+        <h1>{{ title }}</h1>
+        <p class="muted">Use the same structure as the legacy JSON. Saving updates the database; returning to the list rewrites the local JSON file.</p>
+
+        {{ form_start(form) }}
+            <div class="form-grid">
+                {{ form_row(form.name) }}
+                {{ form_row(form.systemVersion) }}
+                {{ form_row(form.systemVersionAlt) }}
+                {{ form_row(form.link) }}
+                {{ form_row(form.st) }}
+                {{ form_row(form.gd) }}
+                {{ form_row(form.latest) }}
+            </div>
+
+            <div class="toolbar">
+                <button class="button" type="submit">Save</button>
+                <a class="button button-secondary" href="{{ path('app_admin_firmware_index') }}">Back</a>
+            </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
