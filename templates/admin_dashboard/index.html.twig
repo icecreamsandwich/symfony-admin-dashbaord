@@ -3,14 +3,30 @@
 {% block title %}Admin Dashboard{% endblock %}
 
 {% block body %}
-    <section class="panel panel-narrow">
+    <section class="hero-card">
         <p class="eyebrow">Admin</p>
         <h1>Admin Dashboard</h1>
+        <p class="muted">Use the left sidebar to manage firmware records, review users, and switch into your profile settings.</p>
+    </section>
+
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <h2>Workspace Overview</h2>
+                <p class="muted">The dashboard now separates navigation, content, and footer into a cleaner admin shell.</p>
+            </div>
+            <a class="button" href="{{ path('app_admin_firmware_index') }}">Manage Firmwares</a>
+        </div>
 
         <div class="stack">
-            <a class="button" href="{{ path('app_admin_user_index') }}">Manage Users</a>
-            <a class="button button-secondary" href="{{ path('app_admin_firmware_index') }}">Manage Firmware</a>
-            <a class="button button-secondary" href="{{ path('app_logout') }}">Logout</a>
+            <div>
+                <h3>Quick Start</h3>
+                <p class="muted">Use the dropdown in the header to open your profile or sign out. User management has moved into the sidebar under its own section.</p>
+            </div>
+            <div>
+                <h3>Firmware Downloads</h3>
+                <p class="muted">The download tool remains available from the sidebar for end users who need to match the correct firmware package.</p>
+            </div>
         </div>
     </section>
 {% endblock %}
