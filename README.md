@@ -2,7 +2,9 @@
 
 This project is a Symfony-based admin dashboard and firmware lookup tool. It provides:
 
-- A login-first admin experience at `/login`
+- A public landing page at `/` for frontend visitors
+- A separate admin login at `/login`
+- An admin dashboard at `/admin/dashboard`
 - A firmware download screen for matching the correct package
 - Admin pages to manage firmware entries
 - Admin pages to manage users
@@ -42,17 +44,24 @@ php bin/console doctrine:migrations:migrate
 symfony server:start
 ```
 
-6. Open the local URL shown in the terminal. The default app front page redirects to `/login`.
+6. Open the local URL shown in the terminal. The default app front page opens the public landing page at `/`.
 
 ## Main User Flow
 
-### 1. Login
+### 1. Public Landing Page
+
+- Open `/`
+- The landing page introduces the app and its main features
+- End users are not required to sign in to start using the frontend-facing flow
+- The menu exposes links to the firmware lookup screen and the admin login page
+
+### 2. Login
 
 - Go to `/login`
 - Enter your email and password
 - After a successful login, the app redirects to the admin dashboard at `/admin/dashboard`
 
-### 2. Dashboard
+### 3. Dashboard
 
 - The dashboard is the main signed-in landing page
 - The page layout is split into:
@@ -64,7 +73,7 @@ symfony server:start
   - Profile
   - Logout
 
-### 3. Profile
+### 4. Profile
 
 - Click the user placeholder in the top-right header
 - Click `Profile`
@@ -73,7 +82,7 @@ symfony server:start
   - View their email
   - Change their password by entering the current password and a new password
 
-### 4. Download Firmwares
+### 5. Download Firmwares
 
 - Open `/download-firmware`
 - Enter the correct:
@@ -82,13 +91,14 @@ symfony server:start
 - Submit the form
 - If a matching firmware exists, the app shows the available download links
 - If the firmware parts are incorrect or no match is found, the app shows an error result
+- This page is public and does not require login
 
 Legacy firmware page routes also exist for compatibility:
 
 - `/carplay/software-download`
 - `/api2/carplay/software/version`
 
-### 5. Manage Firmware Records
+### 6. Manage Firmware Records
 
 - Signed-in admins can open `/admin/firmware`
 - This section lets the admin:
@@ -98,7 +108,7 @@ Legacy firmware page routes also exist for compatibility:
   - Delete a firmware version
 - Firmware data is also exported to the JSON store used by the firmware lookup flow
 
-### 6. Manage Users
+### 7. Manage Users
 
 - Signed-in admins can open `/admin/users`
 - This section lets the admin:
@@ -110,8 +120,8 @@ Legacy firmware page routes also exist for compatibility:
 
 ## Important Routes
 
-- `/` -> redirects to `/login`
-- `/login` -> login page
+- `/` -> public landing page
+- `/login` -> admin login page
 - `/logout` -> logout
 - `/profile` -> current user profile and password change
 - `/admin/dashboard` -> admin dashboard
@@ -122,6 +132,8 @@ Legacy firmware page routes also exist for compatibility:
 
 ## Notes for End Users
 
+- You can use the frontend pages without logging in
+- Admin login is available separately from the site navigation
 - Use exact firmware version values when downloading firmware
 - Do not install a firmware package unless the software version and hardware version match correctly
 - If the app shows no matching package, do not guess; verify the version details first

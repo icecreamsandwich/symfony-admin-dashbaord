@@ -405,7 +405,7 @@
 
         <div class="site-shell">
             <header class="site-header">
-                <a class="brand text-link" href="{{ app.user ? path('app_admin_dashboard') : path('app_login') }}">
+                <a class="brand text-link" href="{{ app.user ? path('app_admin_dashboard') : path('app_home') }}">
                     <span class="brand-wrap">
                         <span class="brand-mark">SF</span>
                         Symfony Firmware Manager
@@ -428,8 +428,9 @@
                             </div>
                         </details>
                     {% else %}
+                        <a class="sidebar-link {{ current_route == 'app_home' ? 'is-active' : '' }}" href="{{ path('app_home') }}">Home</a>
                         <a class="sidebar-link {{ (current_route ?? '') starts with 'app_firmware_download' ? 'is-active' : '' }}" href="{{ path('app_firmware_download') }}">Download Firmwares</a>
-                        <a href="{{ path('app_login') }}">Login</a>
+                        <a class="sidebar-link {{ current_route == 'app_login' ? 'is-active' : '' }}" href="{{ path('app_login') }}">Admin Login</a>
                     {% endif %}
                 </div>
             </header>
@@ -447,8 +448,14 @@
                             {% endif %}
                         </nav>
                     {% else %}
-                        <p class="sidebar-title">Welcome</p>
-                        <p class="muted">Sign in to access the admin dashboard and profile tools.</p>
+                        <p class="sidebar-title">Explore</p>
+                        <nav class="sidebar-nav">
+                            <a class="sidebar-link {{ current_route == 'app_home' ? 'is-active' : '' }}" href="{{ path('app_home') }}">Landing Page</a>
+                            <a class="sidebar-link {{ (current_route ?? '') starts with 'app_firmware_download' ? 'is-active' : '' }}" href="{{ path('app_firmware_download') }}">Firmware Lookup</a>
+                            <a class="sidebar-link {{ current_route == 'app_login' ? 'is-active' : '' }}" href="{{ path('app_login') }}">Admin Login</a>
+                        </nav>
+                        <div class="sidebar-divider"></div>
+                        <p class="muted">Admins can sign in from the menu. End users can stay on the frontend flow without authentication.</p>
                     {% endif %}
 
                     {% block sidebar %}{% endblock %}
