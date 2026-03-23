@@ -2,15 +2,228 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Firmware Manager{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
+            <style>
+                :root {
+                    --bg: #f4efe7;
+                    --panel: #fffdf9;
+                    --panel-alt: #fff6e8;
+                    --ink: #241c15;
+                    --muted: #64584d;
+                    --line: #d9cfc2;
+                    --brand: #8d4f16;
+                    --brand-dark: #6b3708;
+                    --danger: #ad2e24;
+                    --success-bg: #edf8ef;
+                    --success-ink: #1d6a31;
+                    --error-bg: #fff0ee;
+                    --error-ink: #8e1f15;
+                    --shadow: 0 20px 60px rgba(50, 35, 18, 0.12);
+                }
+
+                * { box-sizing: border-box; }
+                body {
+                    margin: 0;
+                    font-family: Georgia, "Times New Roman", serif;
+                    color: var(--ink);
+                    background:
+                        radial-gradient(circle at top left, rgba(230, 179, 111, 0.28), transparent 30%),
+                        linear-gradient(180deg, #f8f3ec 0%, var(--bg) 100%);
+                }
+
+                a { color: var(--brand); }
+                code { background: #f3e7d6; padding: 0.12rem 0.4rem; border-radius: 0.35rem; }
+
+                .site-shell {
+                    max-width: 1100px;
+                    margin: 0 auto;
+                    padding: 2rem 1rem 4rem;
+                }
+
+                .site-nav {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 1rem;
+                    align-items: center;
+                    margin-bottom: 2rem;
+                }
+
+                .site-nav-links {
+                    display: flex;
+                    gap: 0.75rem;
+                    flex-wrap: wrap;
+                    align-items: center;
+                }
+
+                .brand {
+                    text-decoration: none;
+                    color: var(--ink);
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    letter-spacing: 0.03em;
+                }
+
+                .hero-card,
+                .panel,
+                .warning-card {
+                    background: var(--panel);
+                    border: 1px solid rgba(141, 79, 22, 0.18);
+                    box-shadow: var(--shadow);
+                    border-radius: 1.5rem;
+                    padding: 1.5rem;
+                    margin-bottom: 1.5rem;
+                }
+
+                .warning-card {
+                    background: var(--panel-alt);
+                }
+
+                .panel-narrow {
+                    max-width: 780px;
+                    margin-inline: auto;
+                }
+
+                .panel-header,
+                .toolbar,
+                .actions {
+                    display: flex;
+                    gap: 0.75rem;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                }
+
+                h1, h2, h3 { margin-top: 0; }
+                .eyebrow {
+                    text-transform: uppercase;
+                    letter-spacing: 0.18em;
+                    font-size: 0.76rem;
+                    color: var(--brand);
+                    margin-bottom: 0.75rem;
+                    font-weight: 700;
+                }
+
+                .muted { color: var(--muted); }
+                .stack, .stack-sm {
+                    display: grid;
+                    gap: 1rem;
+                }
+                .stack-sm { gap: 0.35rem; }
+
+                .button {
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 999px;
+                    background: var(--brand);
+                    color: white;
+                    border: 0;
+                    padding: 0.8rem 1.2rem;
+                    text-decoration: none;
+                    cursor: pointer;
+                    font: inherit;
+                }
+
+                .button:hover { background: var(--brand-dark); }
+                .button-secondary { background: transparent; color: var(--brand); border: 1px solid var(--brand); }
+                .button-danger { background: var(--danger); }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                th, td {
+                    text-align: left;
+                    padding: 0.9rem 0.75rem;
+                    border-bottom: 1px solid var(--line);
+                    vertical-align: top;
+                }
+
+                .table-wrap { overflow-x: auto; }
+
+                form label {
+                    display: block;
+                    font-weight: 700;
+                    margin-bottom: 0.35rem;
+                }
+
+                input[type="email"],
+                input[type="password"],
+                input[type="text"],
+                input:not([type]),
+                textarea {
+                    width: 100%;
+                    padding: 0.85rem 1rem;
+                    border: 1px solid var(--line);
+                    border-radius: 0.85rem;
+                    background: #fff;
+                    color: var(--ink);
+                    font: inherit;
+                }
+
+                input[disabled] {
+                    background: #f3eee8;
+                    color: #7a6d61;
+                }
+
+                .form-grid {
+                    display: grid;
+                    gap: 1rem;
+                }
+
+                .flash,
+                .result {
+                    border-radius: 1rem;
+                    padding: 1rem 1.1rem;
+                    margin: 1rem 0;
+                }
+
+                .flash-success,
+                .result-success {
+                    background: var(--success-bg);
+                    color: var(--success-ink);
+                }
+
+                .result-error {
+                    background: var(--error-bg);
+                    color: var(--error-ink);
+                }
+
+                .form-error-message { color: var(--danger); }
+                .help-text { color: var(--muted); font-size: 0.95rem; }
+
+                @media (max-width: 720px) {
+                    .site-shell { padding-top: 1rem; }
+                    .site-nav { flex-direction: column; align-items: flex-start; }
+                }
+            </style>
         {% endblock %}
 
         {% block javascripts %}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="site-shell">
+            <nav class="site-nav">
+                <a class="brand" href="{{ path('app_firmware_download') }}">Symfony Firmware Manager</a>
+                <div class="site-nav-links">
+                    <a href="{{ path('app_firmware_download') }}">Download Firmware</a>
+                    {% if app.user %}
+                        <a href="{{ path('app_admin_dashboard') }}">Dashboard</a>
+                        <a href="{{ path('app_admin_firmware_index') }}">Manage Firmware</a>
+                        <a href="{{ path('app_admin_user_index') }}">Manage Users</a>
+                        <a href="{{ path('app_logout') }}">Logout</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Login</a>
+                    {% endif %}
+                </div>
+            </nav>
+
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>

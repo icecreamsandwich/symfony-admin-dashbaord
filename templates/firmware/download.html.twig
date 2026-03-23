@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Firmware Download{% endblock %}
+
+{% block body %}
+    <section class="hero-card">
+        <p class="eyebrow">Firmware Download</p>
+        <h1>Update the software for your CarPlay / Android Auto MMI</h1>
+        <p class="muted">Customers must enter the exact software and hardware version. A wrong firmware package can damage the device.</p>
+    </section>
+
+    <section class="panel panel-narrow">
+        <form method="post" class="stack">
+            <div>
+                <label for="version">Software Version</label>
+                <input id="version" name="version" value="{{ form_data.version }}" placeholder="Your software version" required>
+            </div>
+
+            <div>
+                <label for="mcuVersion">MCU Version</label>
+                <input id="mcuVersion" name="mcuVersion" value="{{ form_data.mcuVersion }}" placeholder="Not required" disabled>
+            </div>
+
+            <div>
+                <label for="hwVersion">HW Version</label>
+                <input id="hwVersion" name="hwVersion" value="{{ form_data.hwVersion }}" placeholder="Your HW version" required>
+            </div>
+
+            <div class="toolbar">
+                <button class="button" type="submit">Check</button>
+            </div>
+        </form>
+
+        {% if result is not null %}
+            <div class="result {{ result.versionExist ? 'result-success' : 'result-error' }}">
+                <p>{{ result.msg }}</p>
+                <div class="toolbar">
+                    {% if result.st %}
+                        <a class="button" href="{{ result.st }}" target="_blank" rel="noreferrer">Download ST Firmware</a>
+                    {% endif %}
+                    {% if result.gd %}
+                        <a class="button" href="{{ result.gd }}" target="_blank" rel="noreferrer">Download GD Firmware</a>
+                    {% endif %}
+                    {% if result.link %}
+                        <a class="button button-secondary" href="{{ result.link }}" target="_blank" rel="noreferrer">Open General Folder</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </section>
+
+    <section class="warning-card">
+        <h2>Warning</h2>
+        <p>Entering an incorrect software number and installing the wrong firmware can brick the MMI. If there is any doubt, stop and contact support before downloading anything.</p>
+    </section>
+{% endblock %}

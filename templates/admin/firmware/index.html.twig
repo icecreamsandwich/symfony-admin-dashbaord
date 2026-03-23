@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Firmware Versions{% endblock %}
+
+{% block body %}
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <p class="eyebrow">Admin</p>
+                <h1>Firmware Versions</h1>
+                <p class="muted">Manage the firmware matrix and overwrite the local JSON file used for imports.</p>
+                <p class="muted">JSON file: <code>{{ json_path }}</code></p>
+            </div>
+            <a class="button" href="{{ path('app_admin_firmware_new') }}">Add Version</a>
+        </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="flash flash-success">{{ message }}</div>
+        {% endfor %}
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>System</th>
+                        <th>Match value</th>
+                        <th>Latest</th>
+                        <th>Links</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for version in versions %}
+                        <tr>
+                            <td>{{ version.name }}</td>
+                            <td>{{ version.systemVersion }}</td>
+                            <td>{{ version.systemVersionAlt }}</td>
+                            <td>{{ version.latest ? 'Yes' : 'No' }}</td>
+                            <td>
+                                <div class="stack-sm">
+                                    <a href="{{ version.link }}" target="_blank" rel="noreferrer">General</a>
+                                    {% if version.st %}<a href="{{ version.st }}" target="_blank" rel="noreferrer">ST</a>{% endif %}
+                                    {% if version.gd %}<a href="{{ version.gd }}" target="_blank" rel="noreferrer">GD</a>{% endif %}
+                                </div>
+                            </td>
+                            <td class="actions">
+                                <a class="button button-secondary" href="{{ path('app_admin_firmware_edit', {id: version.id}) }}">Edit</a>
+                                <form method="post" action="{{ path('app_admin_firmware_delete', {id: version.id}) }}" onsubmit="return confirm('Delete this firmware version?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete_firmware_' ~ version.id) }}">
+                                    <button class="button button-danger" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">No firmware versions found.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
