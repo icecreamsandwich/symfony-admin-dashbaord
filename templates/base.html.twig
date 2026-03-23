@@ -430,7 +430,7 @@
                     {% else %}
                         <a class="sidebar-link {{ current_route == 'app_home' ? 'is-active' : '' }}" href="{{ path('app_home') }}">Home</a>
                         <a class="sidebar-link {{ (current_route ?? '') starts with 'app_firmware_download' ? 'is-active' : '' }}" href="{{ path('app_firmware_download') }}">Download Firmwares</a>
-                        <a class="sidebar-link {{ current_route == 'app_login' ? 'is-active' : '' }}" href="{{ path('app_login') }}">Admin Login</a>
+                        <a class="sidebar-link {{ current_route == 'app_login' ? 'is-active' : '' }}" href="{{ path('app_login') }}"> Login</a>
                     {% endif %}
                 </div>
             </header>
@@ -450,9 +450,8 @@
                     {% else %}
                         <p class="sidebar-title">Explore</p>
                         <nav class="sidebar-nav">
-                            <a class="sidebar-link {{ current_route == 'app_home' ? 'is-active' : '' }}" href="{{ path('app_home') }}">Landing Page</a>
                             <a class="sidebar-link {{ (current_route ?? '') starts with 'app_firmware_download' ? 'is-active' : '' }}" href="{{ path('app_firmware_download') }}">Firmware Lookup</a>
-                            <a class="sidebar-link {{ current_route == 'app_login' ? 'is-active' : '' }}" href="{{ path('app_login') }}">Admin Login</a>
+                            <a class="sidebar-link {{ current_route == 'app_login' ? 'is-active' : '' }}" href="{{ path('app_login') }}">Login</a>
                         </nav>
                         <div class="sidebar-divider"></div>
                         <p class="muted">Admins can sign in from the menu. End users can stay on the frontend flow without authentication.</p>
