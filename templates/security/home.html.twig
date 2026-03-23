@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Firmware Manager{% endblock %}
+
+{% block body %}
+    <section class="hero-card">
+        <p class="eyebrow">Welcome</p>
+        <h1>Firmware management without the admin friction.</h1>
+        <p class="muted">This app keeps the public firmware lookup flow simple for end users while giving admins a separate workspace for maintaining releases, users, and system data.</p>
+    </section>
+
+    <section class="panel">
+        <div class="panel-header">
+            <div>
+                <h2>What the app does</h2>
+                <p class="muted">The frontend stays focused on fast lookups, while the admin area stays out of the way until it is needed.</p>
+            </div>
+        </div>
+
+        <div class="stack">
+            <div>
+                <h3>Firmware lookup</h3>
+                <p class="muted">End users can search by version details and immediately see the matching package links without being asked to sign in first.</p>
+            </div>
+            <div>
+                <h3>Admin workspace</h3>
+                <p class="muted">Admins get a separate dashboard for managing firmware records, user accounts, and profile settings behind the login screen.</p>
+            </div>
+            <div>
+                <h3>Clear separation</h3>
+                <p class="muted">Public visitors land on an informational homepage, and admin tools remain accessible from dedicated routes and menu links only.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

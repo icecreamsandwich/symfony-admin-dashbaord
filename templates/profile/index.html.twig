@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block body %}
+    <section class="panel panel-narrow">
+        <p class="eyebrow">Profile</p>
+        <h1>My Profile</h1>
+        <p class="muted">Review your signed-in account and change your password from this page.</p>
+
+        {% for message in app.flashes('success') %}
+            <div class="flash flash-success">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+            <div class="form-grid">
+                {{ form_row(form.email) }}
+                {{ form_row(form.currentPassword) }}
+                {{ form_row(form.newPassword) }}
+                {{ form_row(form.confirmPassword) }}
+            </div>
+
+            <div class="toolbar">
+                <button class="button" type="submit">Save Changes</button>
+                <a class="button button-secondary" href="{{ path('app_admin_dashboard') }}">Back to Dashboard</a>
+            </div>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
