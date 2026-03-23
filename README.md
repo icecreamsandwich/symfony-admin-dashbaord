@@ -137,3 +137,14 @@ Legacy firmware page routes also exist for compatibility:
 - Use exact firmware version values when downloading firmware
 - Do not install a firmware package unless the software version and hardware version match correctly
 - If the app shows no matching package, do not guess; verify the version details first
+
+## Sample Data
+
+### Admin login:
+admin@bimmer.com, Password123!
+
+### Firmware lookup:
+
+Software Version: v3.4.1.mmiproxu.b
+
+HW version: B_C_2024.01.01
